@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Волшебная фотогалерея</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Волшебная фотогалерея</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Главная</a></li>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </nav>
+    </header>
+      
+    <div class="container">
+      <section class="gallery">
+        <!-- Изображение, которое будет переключаться -->
+        <div class="image-container image">
+          <img id="firstImage" src="./img/wizard.svg" alt="волшебник">
+        </div>
+      </section>
+
+      <!-- Кнопки управления галереей -->
+      <div class="controls">
+        <button id="prevBtn">Назад</button>
+        <button id="nextBtn">Вперёд</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Волшебный музей</p>
+  </footer>
+
+  <script>
+    // Создаем массив images, в котором находятся объекты-изображения
+    const images = [
+      { src: "./img/wizard.svg", alt: "волшебник" },
+      { src: "./img/hat.svg", alt: "шляпа" },
+      { src: "./img/rabbit.svg", alt: "кролик" },
+      { src: "./img/scroll.svg", alt: "свиток" },
+      { src: "./img/sparkles.svg", alt: "искры" },
+      { src: "./img/wand.svg", alt: "палочка" },
+      { src: "./img/crystalball.svg", alt: "кристальный шар" }
+    ];
+
+    // Создаем переменную, которая хранит индекс текущего отображаемого изображения. Изначально она установлена в 0, то есть это первое изображение из массива.
+    let currentIndex = 0;
+
+    // С помощью метода document.getElementById выбираем элемент на странице по id "firstImage". Этот элемент будет использоваться для отображения выбранного изображения из массива.
+    const firstImage = document.getElementById("firstImage");
+
+    // С помощью функции updateImage обновляем свойства выбранного элемента:
+    // Устанавливаем новое значение для src и alt, используя текущий объект из массива images по индексу currentIndex.
+    // Таким образом, при вызове этой функции на странице отображается изображение, соответствующее значению currentIndex.
+    function updateImage() {
+      firstImage.src = images[currentIndex].src;
+      firstImage.alt = images[currentIndex].alt;
+    }
+
+    // Теперь по клику начинаем сдвигать изображения по кнопке "Вперед"
+    // Сначала с помощью document.getElementById выбираем кнопку с id nextBtn.
+    // С помощью метода addEventListener устанавливаем обработчик события click.
+    // Внутри обработчика увеличивается текущий индекс на 1 и чтобы сделать слайдер циклическим делим на общее количество изображений
+    // Обновление изображения:
+    // После изменения currentIndex вызывается функция updateImage(), которая обновляет отображаемое изображение на новое.
+    document.getElementById("nextBtn").addEventListener("click", function() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateImage();
+    });
+
+    // Здесь то же самое толькодля "Назад"
+    document.getElementById("prevBtn").addEventListener("click", function() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateImage();
+    });
+  </script>
+</body>
+</html>
